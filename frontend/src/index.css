@@ -5,14 +5,14 @@
 
 /* Colour tokens. Components use names like bg-field or text-muted, so the
    whole app switches theme by changing these variables only.
-   Look: monochrome glass. Frosted panels over soft flowing waves
+   Look: monochrome frosted glass over soft, misty pools of light and shade
    (see components/Backdrop.tsx), no colour except the accent. */
 
 /* Light: white and soft greys, near-black accent. */
 :root {
   --c-canvas: #eef0f3;
-  --c-glass: rgb(255 255 255 / 0.5); /* cards, sidebar */
-  --c-glass-strong: rgb(255 255 255 / 0.78); /* header, dialogs, phone menu */
+  --c-glass: rgb(255 255 255 / 0.66); /* cards, sidebar */
+  --c-glass-strong: rgb(255 255 255 / 0.86); /* header, dialogs, phone menu */
   --c-glass-edge: rgb(255 255 255 / 0.8);
   /* A soft diagonal shine across each panel. */
   --c-glass-sheen: linear-gradient(
@@ -32,17 +32,16 @@
   --c-accent-soft: rgb(22 24 29 / 0.07);
   --c-danger: #b42318;
   --c-danger-soft: rgb(180 35 24 / 0.1);
-  /* The background waves: grey bands with white highlights. */
-  --c-wave-1: rgb(150 156 170 / 0.4);
-  --c-wave-2: rgb(190 195 206 / 0.55);
-  --c-wave-line: rgb(255 255 255 / 0.95);
+  /* The misty background shapes. */
+  --c-shape-1: rgb(160 166 180 / 0.45);
+  --c-shape-2: rgb(205 209 218 / 0.7);
 }
 
-/* Dark: black and graphite, silver waves, lime accent. */
+/* Dark: black and graphite, misty silver light, cyan accent. */
 .dark {
   --c-canvas: #08090b;
-  --c-glass: rgb(255 255 255 / 0.05);
-  --c-glass-strong: rgb(18 19 23 / 0.72);
+  --c-glass: rgb(255 255 255 / 0.08);
+  --c-glass-strong: rgb(22 24 29 / 0.82);
   --c-glass-edge: rgb(255 255 255 / 0.12);
   --c-glass-sheen: linear-gradient(
     135deg,
@@ -56,14 +55,13 @@
   --c-hover: rgb(255 255 255 / 0.08);
   --c-ink: #f3f4f6;
   --c-muted: #a3a8b3;
-  --c-accent: #c8f169;
-  --c-accent-ink: #0b0d10;
-  --c-accent-soft: rgb(200 241 105 / 0.14);
+  --c-accent: #67e8f9;
+  --c-accent-ink: #06121a;
+  --c-accent-soft: rgb(103 232 249 / 0.14);
   --c-danger: #ff8a7a;
   --c-danger-soft: rgb(255 138 122 / 0.14);
-  --c-wave-1: rgb(255 255 255 / 0.07);
-  --c-wave-2: rgb(170 176 190 / 0.12);
-  --c-wave-line: rgb(255 255 255 / 0.22);
+  --c-shape-1: rgb(255 255 255 / 0.09);
+  --c-shape-2: rgb(150 160 175 / 0.12);
 }
 
 /* People who ask their system for less transparency get solid panels. */
@@ -99,7 +97,7 @@
 @utility glass {
   background-color: var(--c-glass);
   background-image: var(--c-glass-sheen);
-  backdrop-filter: blur(24px) saturate(160%);
+  backdrop-filter: blur(32px) saturate(140%);
   border: 1px solid var(--c-glass-edge);
   box-shadow: var(--c-glass-shadow);
 }
@@ -107,7 +105,7 @@
 @utility glass-strong {
   background-color: var(--c-glass-strong);
   background-image: var(--c-glass-sheen);
-  backdrop-filter: blur(28px) saturate(160%);
+  backdrop-filter: blur(36px) saturate(140%);
   border: 1px solid var(--c-glass-edge);
   box-shadow: var(--c-glass-shadow);
 }
