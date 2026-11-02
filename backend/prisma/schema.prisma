@@ -17,5 +17,35 @@ model Organization {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
+  users User[]
+
   @@map("organizations")
+}
+
+// The four fixed roles of the MVP (see docs/DECISIONS.md).
+enum Role {
+  SUPER_ADMIN
+  MANAGER
+  TEAM_LEADER
+  EMPLOYEE
+}
+
+// A person who can log in. Belongs to exactly one organisation.
+model User {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  name           String
+  // Unique across the whole app, so login needs only email + password.
+  // Stored in lower case.
+  email          String   @unique
+  passwordHash   String   @map("password_hash")
+  role           Role     @default(EMPLOYEE)
+  isActive       Boolean  @default(true) @map("is_active")
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+
+  @@index([organizationId])
+  @@map("users")
 }
