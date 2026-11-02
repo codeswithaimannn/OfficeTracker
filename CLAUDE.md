@@ -21,7 +21,7 @@ not been walked through.
 - Backend: Node.js (v24), NestJS, TypeScript, Prisma ORM, REST APIs
 - Database: PostgreSQL 17
 - Frontend: React + TypeScript + Vite, Tailwind CSS, TanStack Query, React Router
-- Tests: Jest + Supertest (backend); Vitest + React Testing Library (frontend)
+- Tests: Vitest + Supertest (backend); Vitest + React Testing Library (frontend)
 - No Docker for now. Runs locally; deployed later (see docs/DECISIONS.md).
 
 ## Layout

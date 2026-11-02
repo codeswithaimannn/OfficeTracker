@@ -50,3 +50,8 @@ cookie works without cross-site cookie settings.
 
 Known limit: Render's free tier sleeps when idle, so the first request takes about 30 seconds.
 That's acceptable for a portfolio demo.
+
+## 2026-11-02: Vitest for backend tests too
+NestJS 12 generates new apps with Vitest instead of Jest. We keep it: the frontend uses Vitest as
+well, so the whole project has one test runner with the same syntax. Supertest is still used for
+HTTP tests.
