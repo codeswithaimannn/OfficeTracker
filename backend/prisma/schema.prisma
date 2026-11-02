@@ -17,9 +17,28 @@ model Organization {
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
 
-  users User[]
+  users       User[]
+  departments Department[]
 
   @@map("organizations")
+}
+
+// A team inside an organisation, e.g. "Sales" or "Accounts".
+model Department {
+  id             String   @id @default(uuid()) @db.Uuid
+  organizationId String   @map("organization_id") @db.Uuid
+  name           String
+  description    String?
+  createdAt      DateTime @default(now()) @map("created_at")
+  updatedAt      DateTime @updatedAt @map("updated_at")
+
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  users        User[]
+
+  // Two departments in one organisation cannot share a name. This unique
+  // index also serves lookups by organisation.
+  @@unique([organizationId, name])
+  @@map("departments")
 }
 
 // The four fixed roles of the MVP (see docs/DECISIONS.md).
@@ -41,11 +60,16 @@ model User {
   passwordHash   String   @map("password_hash")
   role           Role     @default(EMPLOYEE)
   isActive       Boolean  @default(true) @map("is_active")
+  departmentId   String?  @map("department_id") @db.Uuid
   createdAt      DateTime @default(now()) @map("created_at")
   updatedAt      DateTime @updatedAt @map("updated_at")
 
   organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  // Restrict: the database refuses to delete a department that still has
+  // employees (move them first).
+  department   Department?  @relation(fields: [departmentId], references: [id], onDelete: Restrict)
 
   @@index([organizationId])
+  @@index([departmentId])
   @@map("users")
 }

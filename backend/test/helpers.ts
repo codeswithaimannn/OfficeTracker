@@ -27,7 +27,7 @@ export async function createTestApp(prismaOverride?: object): Promise<TestApp> {
 export async function resetDatabase(app: TestApp): Promise<void> {
   assertTestDatabase();
   await app.get(PrismaService)
-    .$executeRaw`TRUNCATE TABLE "users", "organizations" CASCADE`;
+    .$executeRaw`TRUNCATE TABLE "users", "departments", "organizations" CASCADE`;
 }
 
 export interface SignedUpUser {

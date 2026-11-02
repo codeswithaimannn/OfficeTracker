@@ -10,6 +10,7 @@ import { Prisma } from '../generated/prisma/client.js';
 export const TENANT_COLUMN: Record<string, string> = {
   Organization: 'id', // a user may only see their own organisation
   User: 'organizationId',
+  Department: 'organizationId',
 };
 
 const FILTERED_OPERATIONS = new Set([

@@ -7,6 +7,7 @@ import { AUTH_RATE_LIMIT, SESSION_TTL_SECONDS } from './auth.constants.js';
 import { AuthController } from './auth.controller.js';
 import { AuthGuard } from './auth.guard.js';
 import { AuthService } from './auth.service.js';
+import { RolesGuard } from './roles.guard.js';
 
 @Module({
   imports: [
@@ -24,8 +25,10 @@ import { AuthService } from './auth.service.js';
   controllers: [AuthController],
   providers: [
     AuthService,
-    // Makes AuthGuard run on every route in the app.
+    // Run on every route in the app, in this order: first "who are you?"
+    // (AuthGuard), then "are you allowed?" (RolesGuard).
     { provide: APP_GUARD, useClass: AuthGuard },
+    { provide: APP_GUARD, useClass: RolesGuard },
   ],
 })
 export class AuthModule {}
