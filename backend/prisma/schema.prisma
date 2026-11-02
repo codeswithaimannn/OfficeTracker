@@ -1,0 +1,21 @@
+// Database schema. Run `npx prisma migrate dev` after changing it.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// A tenant: one company or office using the app.
+// Every other tenant table will point to it with organization_id.
+model Organization {
+  id        String   @id @default(uuid()) @db.Uuid
+  name      String
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
+
+  @@map("organizations")
+}
