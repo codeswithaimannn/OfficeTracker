@@ -1,0 +1,60 @@
+@import 'tailwindcss';
+
+/* Dark mode follows a "dark" class on <html> (set by the theme toggle). */
+@custom-variant dark (&:where(.dark, .dark *));
+
+/* Colour tokens. Components use names like bg-surface or text-muted, so the
+   whole app switches theme by changing these variables only. */
+:root {
+  --c-canvas: #f6f7f9;
+  --c-surface: #ffffff;
+  --c-border: #e3e6ea;
+  --c-ink: #1b1e24;
+  --c-muted: #5a6170;
+  --c-accent: #2f5bd3;
+  --c-accent-ink: #ffffff;
+  --c-danger: #b42318;
+  --c-danger-soft: #fdecea;
+  --c-sidebar: #14181f;
+  --c-sidebar-ink: #c9ced8;
+  --c-sidebar-active: #262c38;
+}
+
+.dark {
+  --c-canvas: #0f1217;
+  --c-surface: #171b22;
+  --c-border: #2a303b;
+  --c-ink: #e8eaee;
+  --c-muted: #a2a9b6;
+  --c-accent: #6d8ff0;
+  --c-accent-ink: #0f1217;
+  --c-danger: #f47d72;
+  --c-danger-soft: #3a1d1b;
+  --c-sidebar: #0b0d11;
+  --c-sidebar-ink: #c9ced8;
+  --c-sidebar-active: #20252f;
+}
+
+@theme inline {
+  --color-canvas: var(--c-canvas);
+  --color-surface: var(--c-surface);
+  --color-border: var(--c-border);
+  --color-ink: var(--c-ink);
+  --color-muted: var(--c-muted);
+  --color-accent: var(--c-accent);
+  --color-accent-ink: var(--c-accent-ink);
+  --color-danger: var(--c-danger);
+  --color-danger-soft: var(--c-danger-soft);
+  --color-sidebar: var(--c-sidebar);
+  --color-sidebar-ink: var(--c-sidebar-ink);
+  --color-sidebar-active: var(--c-sidebar-active);
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-display: Manrope, Inter, system-ui, sans-serif;
+}
+
+body {
+  margin: 0;
+  background: var(--c-canvas);
+  color: var(--c-ink);
+  font-family: var(--font-sans);
+}
