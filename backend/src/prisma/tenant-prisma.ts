@@ -15,3 +15,12 @@ export function createTenantPrisma(prisma: PrismaService) {
 }
 
 export type TenantPrisma = ReturnType<typeof createTenantPrisma>;
+
+// The tenant extension adds organizationId to every create, but Prisma's
+// types still ask for it. This satisfies the types in one place:
+//   data: tenantData<Prisma.DepartmentUncheckedCreateInput>({ name })
+export function tenantData<T extends { organizationId: string }>(
+  data: Omit<T, 'organizationId'>,
+): T {
+  return data as T;
+}

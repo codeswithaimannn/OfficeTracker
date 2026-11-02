@@ -1,9 +1,12 @@
 import { INestApplication } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
 import { Test } from '@nestjs/testing';
 import request from 'supertest';
 import { App } from 'supertest/types.js';
 import { AppModule } from '../src/app.module.js';
 import { configureApp } from '../src/app.setup.js';
+import { AUTH_COOKIE } from '../src/auth/auth.constants.js';
+import { Role } from '../src/generated/prisma/client.js';
 import { PrismaService } from '../src/prisma/prisma.service.js';
 import { assertTestDatabase } from './test-database.js';
 
@@ -52,6 +55,39 @@ export async function signUp(
     .send({ organizationName, name: 'Test Admin', email, password })
     .expect(201);
   return { cookie: sessionCookie(res.headers['set-cookie']), body: res.body };
+}
+
+export interface TestMember {
+  id: string;
+  cookie: string;
+}
+
+// Adds a user with the given role straight into the database and returns
+// a valid login cookie for them (signed like a real login, without the
+// slow password check or the login rate limit).
+export async function addMember(
+  app: TestApp,
+  organizationId: string,
+  role: Role,
+  email: string,
+  departmentId?: string,
+): Promise<TestMember> {
+  const user = await app.get(PrismaService).user.create({
+    data: {
+      organizationId,
+      role,
+      email,
+      name: `Test ${role}`,
+      passwordHash: 'not-used-in-tests',
+      departmentId,
+    },
+  });
+  const token = await app.get(JwtService).signAsync({
+    sub: user.id,
+    org: organizationId,
+    role,
+  });
+  return { id: user.id, cookie: `${AUTH_COOKIE}=${token}` };
 }
 
 // Picks our session cookie ("name=value") out of a Set-Cookie header.
