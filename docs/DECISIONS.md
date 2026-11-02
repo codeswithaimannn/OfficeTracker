@@ -55,3 +55,21 @@ That's acceptable for a portfolio demo.
 NestJS 12 generates new apps with Vitest instead of Jest. We keep it: the frontend uses Vitest as
 well, so the whole project has one test runner with the same syntax. Supertest is still used for
 HTTP tests.
+
+## 2026-11-02: Who manages whom (M4)
+- Everyone can see departments and the employee list (a staff directory).
+- Super Admins and Managers can create, edit and delete departments.
+- Super Admins manage everyone. Managers manage only Team Leaders and Employees and can only
+  give those roles, so nobody can promote someone to their own level or above.
+- Nobody can change their own role or deactivate themselves. As a safety net for future code,
+  the last active Super Admin can never be demoted or deactivated.
+- The rules live in one small file (`employee-permissions.ts`); the `@Roles()` guard does the
+  coarse check per route.
+
+## 2026-11-02: New employees get a starting password from their admin
+The person adding an employee sets a starting password and shares it with them. An email invite
+link is nicer but needs an email service, so it waits for "Later".
+
+## 2026-11-02: A department with employees cannot be deleted
+Deleting it answers "Move its N employees first", and the database enforces the same
+(`onDelete: Restrict`). Nothing changes by surprise.
