@@ -34,10 +34,24 @@ Needs Node.js 24 and PostgreSQL 17.
    ```
    Check http://localhost:3000/api/health.
 
+## Frontend setup
+
+With the backend running, in a second terminal:
+```
+cd frontend
+npm install
+npm run dev
+```
+Open http://localhost:5173. Vite forwards `/api` calls to the backend on port 3000, so the
+login cookie works without any cross-site settings.
+
 ## Tests
 
 ```
 cd backend
 npm test            # unit tests
 npm run test:e2e    # end-to-end tests (uses the orbitask_test database)
+
+cd frontend
+npm test            # component tests (fake backend, no server needed)
 ```
