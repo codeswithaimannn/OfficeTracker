@@ -1,36 +1,15 @@
-import { Test } from '@nestjs/testing';
-import { INestApplication } from '@nestjs/common';
 import request from 'supertest';
-import { App } from 'supertest/types.js';
-import { AppModule } from '../src/app.module.js';
-import { configureApp } from '../src/app.setup.js';
-import { PrismaService } from '../src/prisma/prisma.service.js';
-
-// Starts the real app (with the real local database) and sends HTTP
-// requests to it.
-async function createApp(
-  prismaOverride?: object,
-): Promise<INestApplication<App>> {
-  const builder = Test.createTestingModule({ imports: [AppModule] });
-  if (prismaOverride) {
-    builder.overrideProvider(PrismaService).useValue(prismaOverride);
-  }
-  const moduleRef = await builder.compile();
-  const app = moduleRef.createNestApplication<INestApplication<App>>();
-  configureApp(app);
-  await app.init();
-  return app;
-}
+import { createTestApp, TestApp } from './helpers.js';
 
 describe('Health and errors (e2e)', () => {
-  let app: INestApplication<App>;
+  let app: TestApp;
 
   afterEach(async () => {
     await app.close();
   });
 
   it('GET /api/health returns ok when the database is up', async () => {
-    app = await createApp();
+    app = await createTestApp();
 
     await request(app.getHttpServer())
       .get('/api/health')
@@ -41,8 +20,9 @@ describe('Health and errors (e2e)', () => {
   it('GET /api/health returns 503 when the database is down', async () => {
     const brokenPrisma = {
       $queryRaw: () => Promise.reject(new Error('connection refused')),
+      $extends: () => ({}), // the tenant client is built from it
     };
-    app = await createApp(brokenPrisma);
+    app = await createTestApp(brokenPrisma);
 
     const res = await request(app.getHttpServer())
       .get('/api/health')
@@ -57,7 +37,7 @@ describe('Health and errors (e2e)', () => {
   });
 
   it('an unknown route returns 404 in the standard error format', async () => {
-    app = await createApp();
+    app = await createTestApp();
 
     const res = await request(app.getHttpServer()).get('/api/nope').expect(404);
 
@@ -70,7 +50,7 @@ describe('Health and errors (e2e)', () => {
   });
 
   it('never echoes the query string back in an error', async () => {
-    app = await createApp();
+    app = await createTestApp();
 
     const res = await request(app.getHttpServer())
       .get('/api/nope?token=secret')

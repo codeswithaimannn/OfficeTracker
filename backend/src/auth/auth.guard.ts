@@ -7,6 +7,7 @@ import {
 import { Reflector } from '@nestjs/core';
 import { JwtService } from '@nestjs/jwt';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { setCurrentOrganization } from '../tenant/tenant-context.js';
 import { AUTH_COOKIE } from './auth.constants.js';
 import { AuthenticatedRequest, JwtPayload } from './auth.types.js';
 import { IS_PUBLIC_KEY } from './public.decorator.js';
@@ -58,6 +59,9 @@ export class AuthGuard implements CanActivate {
       organizationId: user.organizationId,
       role: user.role,
     };
+    // From here on, every tenant query in this request is limited to
+    // this user's organisation.
+    setCurrentOrganization(user.organizationId);
     return true;
   }
 }

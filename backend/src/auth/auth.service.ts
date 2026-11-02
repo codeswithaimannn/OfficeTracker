@@ -1,5 +1,6 @@
 import {
   ConflictException,
+  Inject,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -7,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcryptjs';
 import { Prisma, Role } from '../generated/prisma/client.js';
 import { PrismaService } from '../prisma/prisma.service.js';
+import { TENANT_PRISMA, type TenantPrisma } from '../prisma/tenant-prisma.js';
 import { toUserDto, UserDto } from '../users/user.dto.js';
 import { BCRYPT_ROUNDS } from './auth.constants.js';
 import { LoginDto, SignupDto } from './dto/auth.dto.js';
@@ -31,7 +33,11 @@ export class AuthService {
   );
 
   constructor(
+    // Cross-organisation client: sign-up and login run before we know
+    // the organisation.
     private readonly prisma: PrismaService,
+    // Organisation-scoped client for everything after login.
+    @Inject(TENANT_PRISMA) private readonly db: TenantPrisma,
     private readonly jwt: JwtService,
   ) {}
 
@@ -85,7 +91,7 @@ export class AuthService {
   }
 
   async me(userId: string): Promise<UserDto> {
-    const user = await this.prisma.user.findUnique({
+    const user = await this.db.user.findUnique({
       where: { id: userId },
       include: { organization: true },
     });

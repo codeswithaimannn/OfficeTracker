@@ -1,6 +1,7 @@
 import { INestApplication, ValidationPipe } from '@nestjs/common';
 import cookieParser from 'cookie-parser';
 import { AllExceptionsFilter } from './common/http-exception.filter.js';
+import { tenantContextMiddleware } from './tenant/tenant-context.js';
 
 // App-wide settings, shared by main.ts and the e2e tests so both run the
 // app the same way.
@@ -9,6 +10,8 @@ export function configureApp(app: INestApplication): void {
   app.setGlobalPrefix('api');
   // Makes request.cookies available (the login token lives in a cookie).
   app.use(cookieParser());
+  // Gives each request its own store for the logged-in organisation.
+  app.use(tenantContextMiddleware);
   // Checks every request body against its DTO class. Unknown fields are
   // rejected, and values are converted (e.g. emails trimmed).
   app.useGlobalPipes(
