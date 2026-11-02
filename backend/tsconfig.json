@@ -19,5 +19,14 @@
     "strict": true,
     "strictPropertyInitialization": false,
     "types": ["vitest/globals", "node"]
+  },
+  // Watch mode (npm run start:dev): on Windows the default file-system events
+  // reported changes to files that had not changed, so the app was rebuilt
+  // and restarted every second and never finished starting. Polling compares
+  // modified times instead.
+  "watchOptions": {
+    "watchFile": "priorityPollingInterval",
+    "watchDirectory": "dynamicPriorityPolling",
+    "excludeDirectories": ["**/node_modules", "dist"]
   }
 }
