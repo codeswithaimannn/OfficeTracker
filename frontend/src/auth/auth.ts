@@ -74,9 +74,12 @@ export function useLogout() {
   return useMutation({
     mutationFn: () => api<void>('/auth/logout', { method: 'POST' }),
     onSuccess: () => {
-      // Forget everything cached for this user, then mark as logged out.
-      queryClient.clear();
+      // Mark as logged out, then forget everything else cached for this
+      // user. (Clearing "me" too would make the page ask the server again.)
       queryClient.setQueryData(ME_KEY, null);
+      queryClient.removeQueries({
+        predicate: (query) => query.queryKey[0] !== ME_KEY[0],
+      });
     },
   });
 }
