@@ -22,7 +22,7 @@ const NAV_ITEMS: NavItem[] = [
   { label: 'Dashboard', icon: LayoutDashboard, to: '/' },
   { label: 'Trackers', icon: ListChecks, soon: 'M5' },
   { label: 'Departments', icon: Building2, to: '/departments' },
-  { label: 'Employees', icon: Users, soon: 'M4' },
+  { label: 'Employees', icon: Users, to: '/employees' },
 ];
 
 interface SidebarProps {
