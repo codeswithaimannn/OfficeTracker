@@ -8,7 +8,7 @@ with the owner running it, the tests passing, and the owner confirming.
 | M0 | Setup and decisions | Done |
 | M1 | Backend skeleton | Done |
 | M2 | Auth and organisations | Done |
-| M3 | Frontend shell | Not started |
+| M3 | Frontend shell | Done |
 | M4 | Departments and employees | Not started |
 | M5 | Tracker builder | Not started |
 | M6 | Tracker views | Not started |
