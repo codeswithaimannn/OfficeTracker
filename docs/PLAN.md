@@ -6,7 +6,7 @@ with the owner running it, the tests passing, and the owner confirming.
 | # | Milestone | Status |
 |---|-----------|--------|
 | M0 | Setup and decisions | Done |
-| M1 | Backend skeleton | In progress |
+| M1 | Backend skeleton | Done |
 | M2 | Auth and organisations | Not started |
 | M3 | Frontend shell | Not started |
 | M4 | Departments and employees | Not started |
