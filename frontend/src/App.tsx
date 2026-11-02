@@ -2,6 +2,7 @@ import { Navigate, Route, Routes } from 'react-router';
 import { GuestOnly, RequireAuth } from './auth/RouteGuards';
 import { AppLayout } from './layout/AppLayout';
 import { DashboardPage } from './pages/DashboardPage';
+import { DepartmentsPage } from './pages/departments/DepartmentsPage';
 import { LoginPage } from './pages/auth/LoginPage';
 import { SignupPage } from './pages/auth/SignupPage';
 
@@ -15,6 +16,7 @@ export default function App() {
       <Route element={<RequireAuth />}>
         <Route element={<AppLayout />}>
           <Route index element={<DashboardPage />} />
+          <Route path="departments" element={<DepartmentsPage />} />
         </Route>
       </Route>
       <Route path="*" element={<Navigate to="/" replace />} />

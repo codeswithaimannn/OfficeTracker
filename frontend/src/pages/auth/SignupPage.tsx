@@ -2,8 +2,9 @@ import { useState, type FormEvent } from 'react';
 import { Link, useNavigate } from 'react-router';
 import { useSignup, type SignupInput } from '../../auth/auth';
 import { TextField } from '../../components/TextField';
-import { ApiError } from '../../lib/api';
-import { AuthLayout, FormError, SubmitButton } from './AuthLayout';
+import { FormError } from '../../components/FormError';
+import { errorMessages } from '../../lib/errors';
+import { AuthLayout, SubmitButton } from './AuthLayout';
 
 // Same limits as the backend (backend/src/auth/dto/auth.dto.ts). The
 // backend still checks everything; these just give faster feedback.
@@ -31,20 +32,13 @@ export function SignupPage() {
     signup.mutate(form, { onSuccess: () => navigate('/', { replace: true }) });
   }
 
-  const errorMessages =
-    signup.error instanceof ApiError
-      ? signup.error.messages
-      : signup.error
-        ? [signup.error.message]
-        : [];
-
   return (
     <AuthLayout
       title="Create your organisation"
       subtitle="You will be its Super Admin and can invite your team later."
     >
       <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-        <FormError messages={errorMessages} />
+        <FormError messages={errorMessages(signup.error)} />
         <TextField
           label="Organisation name"
           autoComplete="organization"

@@ -2,7 +2,9 @@ import { useState, type FormEvent } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router';
 import { useLogin } from '../../auth/auth';
 import { TextField } from '../../components/TextField';
-import { AuthLayout, FormError, SubmitButton } from './AuthLayout';
+import { FormError } from '../../components/FormError';
+import { errorMessages } from '../../lib/errors';
+import { AuthLayout, SubmitButton } from './AuthLayout';
 
 export function LoginPage() {
   const [email, setEmail] = useState('');
@@ -24,7 +26,7 @@ export function LoginPage() {
   return (
     <AuthLayout title="Log in" subtitle="Welcome back. Use your work email.">
       <form onSubmit={handleSubmit} className="flex flex-col gap-4" noValidate>
-        <FormError messages={login.error ? [login.error.message] : []} />
+        <FormError messages={errorMessages(login.error)} />
         <TextField
           label="Email"
           type="email"
