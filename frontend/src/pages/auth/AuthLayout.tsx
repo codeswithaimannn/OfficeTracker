@@ -11,23 +11,23 @@ interface AuthLayoutProps {
 // right. On a phone the panels stack.
 export function AuthLayout({ title, subtitle, children }: AuthLayoutProps) {
   return (
-    <div className="flex min-h-screen flex-wrap">
-      <section className="flex flex-[1_1_420px] flex-col justify-between gap-10 bg-sidebar px-8 py-10 text-sidebar-ink sm:px-12 sm:py-14">
-        <Logo className="text-white" />
+    <div className="flex min-h-screen flex-wrap gap-3 p-3">
+      <section className="glass flex flex-[1_1_420px] flex-col justify-between gap-10 rounded-3xl px-8 py-10 sm:px-12 sm:py-14">
+        <Logo />
         <div className="flex max-w-md flex-col gap-4">
-          <h1 className="font-display text-3xl leading-tight font-bold text-white sm:text-4xl">
+          <h1 className="font-display text-3xl leading-tight font-bold sm:text-4xl">
             Track any kind of office work, your way.
           </h1>
-          <p className="text-base leading-relaxed">
+          <p className="text-base leading-relaxed text-muted">
             Build trackers with your own fields and statuses: client
             follow-ups, meeting actions, daily work, audits. No code needed.
           </p>
         </div>
-        <p className="text-sm text-[#8e96a6]">Portfolio project · demo data only</p>
+        <p className="text-sm text-muted">Portfolio project · demo data only</p>
       </section>
 
-      <section className="flex flex-[1_1_420px] items-center justify-center px-5 py-12">
-        <div className="flex w-full max-w-sm flex-col gap-5">
+      <section className="flex flex-[1_1_420px] items-center justify-center py-6">
+        <div className="glass-strong flex w-full max-w-md flex-col gap-5 rounded-3xl p-6 sm:p-8">
           <div>
             <h2 className="font-display text-2xl font-bold">{title}</h2>
             <p className="mt-1.5 text-muted">{subtitle}</p>

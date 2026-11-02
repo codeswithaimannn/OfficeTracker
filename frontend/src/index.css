@@ -3,58 +3,107 @@
 /* Dark mode follows a "dark" class on <html> (set by the theme toggle). */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* Colour tokens. Components use names like bg-surface or text-muted, so the
-   whole app switches theme by changing these variables only. */
+/* Colour tokens. Components use names like bg-field or text-muted, so the
+   whole app switches theme by changing these variables only.
+   Look: minimal glass. Whitish-grey frosted panels over a few soft colour
+   glows, with a muted periwinkle accent. */
 :root {
-  --c-canvas: #f6f7f9;
-  --c-surface: #ffffff;
-  --c-border: #e3e6ea;
-  --c-ink: #1b1e24;
-  --c-muted: #5a6170;
-  --c-accent: #2f5bd3;
+  --c-canvas: #eceef3;
+  --c-glass: rgb(255 255 255 / 0.55); /* cards, sidebar */
+  --c-glass-strong: rgb(255 255 255 / 0.8); /* header, dialogs, phone menu */
+  --c-glass-edge: rgb(255 255 255 / 0.7);
+  --c-glass-shadow:
+    0 0 0 1px rgb(20 24 40 / 0.05), 0 10px 30px rgb(20 24 40 / 0.08);
+  --c-field: rgb(255 255 255 / 0.75); /* inputs */
+  --c-line: rgb(30 34 48 / 0.14); /* input borders, dividers */
+  --c-hover: rgb(30 34 48 / 0.05);
+  --c-ink: #1d2130;
+  --c-muted: #555c6e;
+  --c-accent: #4e5ba6;
   --c-accent-ink: #ffffff;
+  --c-accent-soft: rgb(78 91 166 / 0.12);
   --c-danger: #b42318;
-  --c-danger-soft: #fdecea;
-  --c-sidebar: #14181f;
-  --c-sidebar-ink: #c9ced8;
-  --c-sidebar-active: #262c38;
+  --c-danger-soft: rgb(180 35 24 / 0.1);
+  --c-glow-1: rgb(140 150 230 / 0.35);
+  --c-glow-2: rgb(190 160 235 / 0.28);
+  --c-glow-3: rgb(140 215 200 / 0.25);
 }
 
 .dark {
-  --c-canvas: #0f1217;
-  --c-surface: #171b22;
-  --c-border: #2a303b;
-  --c-ink: #e8eaee;
-  --c-muted: #a2a9b6;
-  --c-accent: #6d8ff0;
-  --c-accent-ink: #0f1217;
-  --c-danger: #f47d72;
-  --c-danger-soft: #3a1d1b;
-  --c-sidebar: #0b0d11;
-  --c-sidebar-ink: #c9ced8;
-  --c-sidebar-active: #20252f;
+  --c-canvas: #0e1117;
+  --c-glass: rgb(30 34 46 / 0.55);
+  --c-glass-strong: rgb(30 34 46 / 0.85);
+  --c-glass-edge: rgb(255 255 255 / 0.08);
+  --c-glass-shadow: 0 0 0 1px rgb(0 0 0 / 0.2), 0 10px 30px rgb(0 0 0 / 0.35);
+  --c-field: rgb(14 17 23 / 0.5);
+  --c-line: rgb(255 255 255 / 0.12);
+  --c-hover: rgb(255 255 255 / 0.06);
+  --c-ink: #e6e8ef;
+  --c-muted: #a4aaba;
+  --c-accent: #a9b3ee;
+  --c-accent-ink: #11141c;
+  --c-accent-soft: rgb(169 179 238 / 0.14);
+  --c-danger: #f28b82;
+  --c-danger-soft: rgb(242 139 130 / 0.12);
+  --c-glow-1: rgb(110 120 220 / 0.18);
+  --c-glow-2: rgb(160 120 220 / 0.14);
+  --c-glow-3: rgb(90 190 170 / 0.1);
+}
+
+/* People who ask their system for less transparency get solid panels. */
+@media (prefers-reduced-transparency: reduce) {
+  :root {
+    --c-glass: #f6f7f9;
+    --c-glass-strong: #ffffff;
+  }
+  .dark {
+    --c-glass: #1b1f29;
+    --c-glass-strong: #1e222d;
+  }
 }
 
 @theme inline {
   --color-canvas: var(--c-canvas);
-  --color-surface: var(--c-surface);
-  --color-border: var(--c-border);
+  --color-field: var(--c-field);
+  --color-line: var(--c-line);
+  --color-hover: var(--c-hover);
   --color-ink: var(--c-ink);
   --color-muted: var(--c-muted);
   --color-accent: var(--c-accent);
   --color-accent-ink: var(--c-accent-ink);
+  --color-accent-soft: var(--c-accent-soft);
   --color-danger: var(--c-danger);
   --color-danger-soft: var(--c-danger-soft);
-  --color-sidebar: var(--c-sidebar);
-  --color-sidebar-ink: var(--c-sidebar-ink);
-  --color-sidebar-active: var(--c-sidebar-active);
   --font-sans: Inter, system-ui, sans-serif;
   --font-display: Manrope, Inter, system-ui, sans-serif;
 }
 
+/* The frosted panel. "glass" for cards and the sidebar, "glass-strong"
+   (more opaque) where text sits over moving content. */
+@utility glass {
+  background-color: var(--c-glass);
+  backdrop-filter: blur(20px) saturate(150%);
+  border: 1px solid var(--c-glass-edge);
+  box-shadow: var(--c-glass-shadow);
+}
+
+@utility glass-strong {
+  background-color: var(--c-glass-strong);
+  backdrop-filter: blur(24px) saturate(150%);
+  border: 1px solid var(--c-glass-edge);
+  box-shadow: var(--c-glass-shadow);
+}
+
+/* Soft colour glows behind everything; they are what the glass blurs. */
 body {
   margin: 0;
-  background: var(--c-canvas);
+  min-height: 100vh;
   color: var(--c-ink);
   font-family: var(--font-sans);
+  background-color: var(--c-canvas);
+  background-image:
+    radial-gradient(40rem 40rem at 8% 8%, var(--c-glow-1), transparent 60%),
+    radial-gradient(36rem 36rem at 92% 18%, var(--c-glow-2), transparent 60%),
+    radial-gradient(44rem 44rem at 55% 105%, var(--c-glow-3), transparent 60%);
+  background-attachment: fixed;
 }

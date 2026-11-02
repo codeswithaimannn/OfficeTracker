@@ -8,7 +8,7 @@ interface HeaderProps {
 }
 
 const ICON_BUTTON =
-  'flex size-11 items-center justify-center rounded-lg text-muted hover:bg-canvas hover:text-ink';
+  'flex size-11 items-center justify-center rounded-lg text-muted hover:bg-hover hover:text-ink';
 
 function initials(name: string): string {
   return name
@@ -23,7 +23,7 @@ export function Header({ user, onOpenMobileMenu }: HeaderProps) {
   const logout = useLogout();
 
   return (
-    <header className="sticky top-0 z-20 flex items-center gap-2 border-b border-border bg-surface px-3 py-2 sm:px-6">
+    <header className="glass-strong sticky top-3 z-20 mx-3 mt-3 flex items-center gap-2 rounded-2xl px-3 py-2 sm:px-5 md:ml-0">
       <button
         type="button"
         onClick={onOpenMobileMenu}

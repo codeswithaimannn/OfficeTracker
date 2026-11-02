@@ -18,7 +18,7 @@ export function TextField({ label, hint, ...inputProps }: TextFieldProps) {
       <input
         id={id}
         aria-describedby={hint ? hintId : undefined}
-        className="min-h-11 rounded-lg border border-border bg-surface px-3 text-ink outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
+        className="min-h-11 rounded-lg border border-line bg-field px-3 text-ink outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
         {...inputProps}
       />
       {hint && (

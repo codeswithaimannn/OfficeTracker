@@ -51,7 +51,7 @@ export function DepartmentFormDialog({ department, onClose }: DepartmentFormDial
             maxLength={DESCRIPTION_MAX}
             value={description}
             onChange={(e) => setDescription(e.target.value)}
-            className="rounded-lg border border-border bg-surface px-3 py-2 text-ink outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
+            className="rounded-lg border border-line bg-field px-3 py-2 text-ink outline-none focus:border-accent focus:ring-2 focus:ring-accent/30"
           />
         </div>
         <div className="flex justify-end gap-2">

@@ -25,7 +25,7 @@ export function Dialog({ open, title, onClose, children }: DialogProps) {
       ref={ref}
       onClose={onClose}
       aria-labelledby="dialog-title"
-      className="m-auto w-[min(100%-2rem,32rem)] rounded-xl border border-border bg-surface p-0 text-ink backdrop:bg-black/50"
+      className="glass-strong m-auto w-[min(100%-2rem,32rem)] rounded-2xl p-0 text-ink backdrop:bg-black/30 backdrop:backdrop-blur-sm"
     >
       {open && (
         <div className="flex flex-col gap-5 p-6">
@@ -37,7 +37,7 @@ export function Dialog({ open, title, onClose, children }: DialogProps) {
               type="button"
               onClick={onClose}
               aria-label="Close"
-              className="-m-2 flex size-11 items-center justify-center rounded-lg text-muted hover:bg-canvas"
+              className="-m-2 flex size-11 items-center justify-center rounded-lg text-muted hover:bg-hover"
             >
               <X size={20} aria-hidden="true" />
             </button>

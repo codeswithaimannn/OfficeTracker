@@ -18,7 +18,7 @@ export function DashboardPage() {
         </p>
       </div>
 
-      <section className="flex flex-col items-center gap-3 rounded-xl border border-dashed border-border bg-surface px-6 py-12 text-center">
+      <section className="glass flex flex-col items-center gap-3 rounded-2xl px-6 py-12 text-center">
         <span className="flex size-12 items-center justify-center rounded-full bg-accent/15 text-accent">
           <ListChecks size={24} aria-hidden="true" />
         </span>

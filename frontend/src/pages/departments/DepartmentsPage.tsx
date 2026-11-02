@@ -65,7 +65,7 @@ export function DepartmentsPage() {
           {departments.data.map((department) => (
             <li
               key={department.id}
-              className="flex flex-col gap-3 rounded-xl border border-border bg-surface p-5"
+              className="glass flex flex-col gap-3 rounded-2xl p-5"
             >
               <div className="flex-1">
                 <h2 className="font-semibold">{department.name}</h2>
@@ -84,7 +84,7 @@ export function DepartmentsPage() {
                       type="button"
                       onClick={() => setDialog({ kind: 'form', department })}
                       aria-label={`Edit ${department.name}`}
-                      className="flex size-11 items-center justify-center rounded-lg text-muted hover:bg-canvas hover:text-ink"
+                      className="flex size-11 items-center justify-center rounded-lg text-muted hover:bg-hover hover:text-ink"
                     >
                       <Pencil size={18} aria-hidden="true" />
                     </button>
